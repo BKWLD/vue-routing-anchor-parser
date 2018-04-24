@@ -1,0 +1,35 @@
+{
+  "name": "vue-routing-anchor-parser",
+  "version": "1.0.0",
+  "description": "A Vue directive that parses itself and children for internally linking anchor tags and binds their click events to use Vue Router's push()",
+  "main": "index.js",
+  "scripts": {
+    "build": "coffee -ct index.coffee",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BKWLD/vue-routing-anchor-parser.git"
+  },
+  "keywords": [
+    "vue",
+    "router",
+    "directive"
+  ],
+  "author": "Bukwild",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BKWLD/vue-routing-anchor-parser/issues"
+  },
+  "homepage": "https://github.com/BKWLD/vue-routing-anchor-parser#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "coffee-loader": "^0.9.0",
+    "coffeescript": "^2.2.4",
+    "webpack": "^4.6.0"
+  },
+  "dependencies": {
+    "url-parse": "^1.4.0"
+  }
+}

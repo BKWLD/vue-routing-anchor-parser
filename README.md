@@ -15,10 +15,10 @@ In a your bootstrapping JS:
 ```js
 parseAnchors = require('vue-routing-anchor-parser/index.coffee')
 directive.settings({
-  addBlankToExternal: false
+  addBlankToExternal: false,
   internalHosts: [
-     'localhost'
-    'example.com'
+     'localhost',
+    'example.com',
   ]
 })
 Vue.directive('parse-anchors', parseAnchors)
@@ -31,10 +31,10 @@ In `nuxt.config.js`:
 ```js
   modules: [
     ['vue-routing-anchor-parser/nuxt/module', {
-        addBlankToExternal: true
+        addBlankToExternal: true,
         internalHosts: [
-          'localhost'
-          'example.com'
+          'localhost',
+          'example.com',
         ]
     }]
   ]

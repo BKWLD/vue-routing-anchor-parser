@@ -17,7 +17,7 @@ parseAnchors = require('vue-routing-anchor-parser/index.coffee')
 directive.settings({
   addBlankToExternal: false,
   internalHosts: [
-     'localhost',
+    'localhost',
     'example.com',
   ]
 })

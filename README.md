@@ -12,7 +12,7 @@ A Vue directive that parses child elements for internally linking anchor tags an
 
 In a your bootstrapping JS:
 
-```
+```js
 parseAnchors = require('vue-routing-anchor-parser/index.coffee')
 directive.settings({
 	addBlankToExternal: false
@@ -28,7 +28,7 @@ Vue.directive('parse-anchors', parseAnchors)
 
 In `nuxt.config.js`:
 
-```
+```js
 	modules: [
 		['vue-routing-anchor-parser/nuxt/module', {
 				addBlankToExternal: true
@@ -47,7 +47,7 @@ In `nuxt.config.js`:
 
 ## Usage
 
-Add `v-parse-anchors` wherever you want to parse child anchors for internal links and route clicks through Vue Router.  `href`s that begin with a slash, like `<a href='/path/to/something'>` are treated as internal automatically.  If an internal route can't be resolved by Vue Router, it falls back to a full page refresh (though never opens in a new window.) 
+Add `v-parse-anchors` wherever you want to parse child anchors for internal links and route clicks through Vue Router.  `href`s that begin with a slash, like `<a href='/path/to/something'>` are treated as internal automatically.  If an internal route can't be resolved by Vue Router, it falls back to a full page refresh (though never opens in a new window.)
 
 ## Notes
 

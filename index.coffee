@@ -1,10 +1,14 @@
-# Default settings
-settings =
-	addBlankToExternal: true
-	internalHosts: [ location?.host ]
-
 # Deps
 URL = require 'url-parse'
+merge = require 'lodash/merge'
+
+# Default settings
+settings =
+	addBlankToExternal: false
+	internalHosts: [ location?.host ]
+
+# Override the settings
+mergeSettings = (choices) -> merge settings, choices
 
 # Add listeners to anchors
 bind = (el, binding, vnode) ->
@@ -44,7 +48,8 @@ handleExternal = (anchor) ->
 	if settings.addBlankToExternal and not anchor.hasAttribute('target')
 		anchor.setAttribute 'target', '_blank'
 
-# Directive definition.  Relying on Browser garbage collection to cleanup
-# listeners
+# Directive definition with settings method for overriding the default settings.
+# I'm relying on Browser garbage collection to cleanup listeners.
 module.exports =
 	bind: bind
+	settings: mergeSettings

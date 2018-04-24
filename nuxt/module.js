@@ -2,9 +2,10 @@
  * Register the directive
  */
 const path = require('path')
-module.exports = function () {
+module.exports = function (options) {
 	this.addPlugin({
-		src: path.resolve(__dirname, 'plugin.js')
+		src: path.resolve(__dirname, 'plugin.js'),
+		options: JSON.stringify(options),
 	});
 }
 

@@ -1,6 +1,53 @@
 # vue-routing-anchor-parser
-A Vue directive that parses itself and children for anchor tags and binds clicks to use Vue Router's push rather if they link internally
 
+A Vue directive that parses child elements for internally linking anchor tags and binds their click events to use Vue Router's push().
+
+## Install
+
+`yarn add vue-routing-anchor-parser` or `npm install --save vue-routing-anchor-parser`
+
+## Configure
+
+#### Vue
+
+In a your bootstrapping JS:
+
+```
+parseAnchors = require('vue-routing-anchor-parser/index.coffee')
+directive.settings({
+	addBlankToExternal: false
+	internalHosts: [
+	 	'localhost'
+		'example.com'
+	]
+})
+Vue.directive('parse-anchors', parseAnchors)
+```
+
+#### Nuxt
+
+In `nuxt.config.js`:
+
+```
+	modules: [
+		['vue-routing-anchor-parser/nuxt/module', {
+				addBlankToExternal: true
+				internalHosts: [
+					'localhost'
+					'example.com'
+				]
+		}]
+	]
+```
+
+#### Options
+
+- `addBlankToExternal`: Set to true to add `target='_blank'` to external links
+- `internalHosts`: Array of host names that, when found in `href` attributes, get treated as internal links
+
+## Usage
+
+Add `v-parse-anchors` wherever you want to parse child anchors for internal links and route clicks through Vue Router.  `href`s that begin with a slash, like `<a href='/path/to/something'>` are treated as internal automatically.  If an internal route can't be resolved by Vue Router, it falls back to a full page refresh (though never opens in a new window.) 
 
 ## Notes
 

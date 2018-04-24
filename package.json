@@ -1,7 +1,7 @@
 {
   "name": "vue-routing-anchor-parser",
   "version": "1.0.0",
-  "description": "A Vue directive that parses itself and children for internally linking anchor tags and binds their click events to use Vue Router's push()",
+  "description": "A Vue directive that parses child elements for internally linking anchor tags and binds their click events to use Vue Router's push().",
   "main": "index.js",
   "scripts": {
     "build": "coffee -ct index.coffee",
@@ -30,6 +30,7 @@
     "webpack": "^4.6.0"
   },
   "dependencies": {
+    "lodash": "2-4",
     "url-parse": "^1.4.0"
   }
 }

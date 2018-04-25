@@ -7,6 +7,6 @@
  * the directive.
  */
 const Vue = require('vue')
-const directive = require('vue-routing-anchor-parser/index.coffee')
+const directive = require('vue-routing-anchor-parser/index.js')
 directive.settings(JSON.parse('<%= options %>'));
 Vue.directive('parse-anchors', directive)

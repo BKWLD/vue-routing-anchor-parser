@@ -13,7 +13,7 @@ A Vue directive that parses child elements for internally linking anchor tags an
 In a your bootstrapping JS:
 
 ```js
-parseAnchors = require('vue-routing-anchor-parser/index.coffee')
+parseAnchors = require('vue-routing-anchor-parser')
 directive.settings({
   addBlankToExternal: false,
   internalHosts: [

@@ -30,22 +30,25 @@
 
   // Add listeners to anchors
   bind = function bind(el, binding, vnode) {
-    var router;
+    var anchor, href, i, len, ref, results, router, url;
     // Get the router instance
     router = vnode.context.$router;
+    ref = el.querySelectorAll('a');
     // Get anchors that have an href
-    return el.querySelectorAll('a').forEach(function (anchor) {
-      var href, url;
+    results = [];
+    for (i = 0, len = ref.length; i < len; i++) {
+      anchor = ref[i];
       if (!(href = anchor.getAttribute('href'))) {
-        return;
+        continue;
       }
       url = new URL(href);
       if (isInternal(url)) {
-        return handleInternal(anchor, url, router);
+        results.push(handleInternal(anchor, url, router));
       } else {
-        return handleExternal(anchor);
+        results.push(handleExternal(anchor));
       }
-    });
+    }
+    return results;
   };
 
   // Test if an anchor is an internal link

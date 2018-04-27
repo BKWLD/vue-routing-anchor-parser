@@ -17,8 +17,8 @@ bind = (el, binding, vnode) ->
 	router = vnode.context.$router
 
 	# Get anchors that have an href
-	el.querySelectorAll('a').forEach (anchor) ->
-		return unless href = anchor.getAttribute 'href'
+	for anchor in el.querySelectorAll('a')
+		continue unless href = anchor.getAttribute 'href'
 		url = new URL href
 		if isInternal url
 		then handleInternal anchor, url, router

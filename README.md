@@ -51,5 +51,4 @@ Add `v-parse-anchors` wherever you want to parse child anchors for internal link
 
 ## Notes
 
-- This currently only parses children, not the element the directive is added to
 - This currently only parses on `bind`, meaning if the contents for the element change later, new `a` tags won't be processed.

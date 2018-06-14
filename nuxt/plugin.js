@@ -6,7 +6,7 @@
  * JSON-ing it and then parsing it back out so I can send arrays through to
  * the directive.
  */
-const Vue = require('vue')
-const directive = require('vue-routing-anchor-parser/index.js')
+import Vue from 'vue'
+import directive from 'vue-routing-anchor-parser/index.js'
 directive.settings(JSON.parse('<%= options %>'));
 Vue.directive('parse-anchors', directive)

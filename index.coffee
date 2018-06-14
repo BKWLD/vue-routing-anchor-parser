@@ -1,6 +1,6 @@
 # Deps
-URL = require 'url-parse'
-merge = require 'lodash/merge'
+import URL from 'url-parse'
+import merge from 'lodash/merge'
 
 # Default settings
 settings =
@@ -16,16 +16,22 @@ bind = (el, binding, vnode) ->
 	# Get the router instance
 	router = vnode.context.$router
 
-	# Get anchors that have an href
-	for anchor in el.querySelectorAll('a')
-		continue unless href = anchor.getAttribute 'href'
+	# Handle self
+	handleAnchor el, router if el.tagName.toLowerCase() == 'a'
+
+	# Handle child anchors that have an href
+	handleAnchor anchor, router for anchor in el.querySelectorAll 'a'
+
+# Check an anchor tag
+export handleAnchor = (anchor, router) ->
+	if href = anchor.getAttribute 'href'
 		url = new URL href
 		if isInternal url
 		then handleInternal anchor, url, router
 		else handleExternal anchor
 
 # Test if an anchor is an internal link
-isInternal = (url) ->
+export isInternal = (url) ->
 
 	# Does it begin with a / and not an //
 	return true if url.href.match /^\/[^\/]/
@@ -36,7 +42,7 @@ isInternal = (url) ->
 # Add click bindings to internal links that resolve.  Thus, if the Vue doesn't
 # know about a route, it will not be handled by vue-router.  Though it won't
 # open in a new window.
-handleInternal = (anchor, url, router) ->
+export handleInternal = (anchor, url, router) ->
 	route = path: "#{url.pathname}#{url.query}"
 	if router.resolve(route).route.matched.length
 		anchor.addEventListener 'click', (e) ->
@@ -44,12 +50,12 @@ handleInternal = (anchor, url, router) ->
 			router.push path: "#{url.pathname}#{url.query}"
 
 # Add target blank to external links
-handleExternal = (anchor) ->
+export handleExternal = (anchor) ->
 	if settings.addBlankToExternal and not anchor.hasAttribute('target')
 		anchor.setAttribute 'target', '_blank'
 
 # Directive definition with settings method for overriding the default settings.
 # I'm relying on Browser garbage collection to cleanup listeners.
-module.exports =
+export default
 	bind: bind
 	settings: mergeSettings

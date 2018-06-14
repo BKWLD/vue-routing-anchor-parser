@@ -33,6 +33,9 @@ export handleAnchor = (anchor, router) ->
 # Test if an anchor is an internal link
 export isInternal = (url) ->
 
+	# Allow simple strings to be passed in
+	url = new URL url if typeof url == 'string'
+
 	# Does it begin with a / and not an //
 	return true if url.href.match /^\/[^\/]/
 
@@ -42,7 +45,7 @@ export isInternal = (url) ->
 # Add click bindings to internal links that resolve.  Thus, if the Vue doesn't
 # know about a route, it will not be handled by vue-router.  Though it won't
 # open in a new window.
-export handleInternal = (anchor, url, router) ->
+handleInternal = (anchor, url, router) ->
 	route = path: "#{url.pathname}#{url.query}"
 	if router.resolve(route).route.matched.length
 		anchor.addEventListener 'click', (e) ->
@@ -50,7 +53,7 @@ export handleInternal = (anchor, url, router) ->
 			router.push path: "#{url.pathname}#{url.query}"
 
 # Add target blank to external links
-export handleExternal = (anchor) ->
+handleExternal = (anchor) ->
 	if settings.addBlankToExternal and not anchor.hasAttribute('target')
 		anchor.setAttribute 'target', '_blank'
 

@@ -96,7 +96,7 @@ handleInternal = function handleInternal(anchor, url, router) {
     return anchor.addEventListener('click', function (e) {
       e.preventDefault();
       return router.push({
-        path: '' + url.pathname + url.query
+        path: '' + url.pathname + url.query + url.hash
       });
     });
   }

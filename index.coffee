@@ -50,7 +50,7 @@ handleInternal = (anchor, url, router) ->
 	if router.resolve(route).route.matched.length
 		anchor.addEventListener 'click', (e) ->
 			e.preventDefault()
-			router.push path: "#{url.pathname}#{url.query}"
+			router.push path: "#{url.pathname}#{url.query}#{url.hash}"
 
 # Add target blank to external links
 handleExternal = (anchor) ->

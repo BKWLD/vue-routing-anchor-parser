@@ -20,6 +20,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var bind,
     handleExternal,
     handleInternal,
+    makeUrlObj,
     mergeSettings,
     settings,
     indexOf = [].indexOf;
@@ -58,7 +59,7 @@ bind = function bind(el, binding, vnode) {
 var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) {
   var href, url;
   if (href = anchor.getAttribute('href')) {
-    url = new _urlParse2.default(href);
+    url = makeUrlObj(href);
     if (isInternal(url)) {
       return handleInternal(anchor, url, router);
     } else {
@@ -70,10 +71,7 @@ var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) 
 // Test if an anchor is an internal link
 var isInternal = exports.isInternal = function isInternal(url) {
   var ref;
-  if (typeof url === 'string') {
-    // Allow simple strings to be passed in
-    url = new _urlParse2.default(url);
-  }
+  url = makeUrlObj(url);
   if (url.href.match(/^\/[^\/]/)) {
     // Does it begin with a / and not an //
     return true;
@@ -82,6 +80,24 @@ var isInternal = exports.isInternal = function isInternal(url) {
     // Does the host match the comparer
     return true;
   }
+};
+
+// Make a URL instance from url strings
+makeUrlObj = function makeUrlObj(url) {
+  if (typeof url !== 'string') {
+
+    // Already a URL object
+    return url;
+  }
+  if (url.match(/^#/)) {
+
+    // If the URL is just an anchor, prepend the current path so that the URL obj
+    // doesn't add an automatic root path
+    url = (typeof window !== "undefined" && window !== null ? window.location.pathname : void 0) + url;
+  }
+
+  // Return URL object
+  return new _urlParse2.default(url);
 };
 
 // Add click bindings to internal links that resolve.  Thus, if the Vue doesn't

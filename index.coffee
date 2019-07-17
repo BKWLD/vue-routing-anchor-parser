@@ -25,22 +25,33 @@ bind = (el, binding, vnode) ->
 # Check an anchor tag
 export handleAnchor = (anchor, router) ->
 	if href = anchor.getAttribute 'href'
-		url = new URL href
+		url = makeUrlObj href
 		if isInternal url
 		then handleInternal anchor, url, router
 		else handleExternal anchor
 
 # Test if an anchor is an internal link
 export isInternal = (url) ->
-
-	# Allow simple strings to be passed in
-	url = new URL url if typeof url == 'string'
+	url = makeUrlObj url
 
 	# Does it begin with a / and not an //
 	return true if url.href.match /^\/[^\/]/
 
 	# Does the host match the comparer
 	return true if url.host in settings.internalHosts
+
+# Make a URL instance from url strings
+makeUrlObj = (url) ->
+	
+	# Already a URL object
+	return url unless typeof url == 'string' 
+	
+	# If the URL is just an anchor, prepend the current path so that the URL obj
+	# doesn't add an automatic root path
+	url = window?.location.pathname + url if url.match /^#/ 
+	
+	# Return URL object
+	return new URL url
 
 # Add click bindings to internal links that resolve.  Thus, if the Vue doesn't
 # know about a route, it will not be handled by vue-router.  Though it won't

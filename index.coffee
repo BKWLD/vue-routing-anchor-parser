@@ -6,7 +6,7 @@ import merge from 'lodash/merge'
 settings =
 	addBlankToExternal: false
 	internalUrls: []
-	internalHosts: [ location?.host ]
+	internalHosts: []
 	
 # Override the settings
 mergeSettings = (choices) -> merge settings, choices

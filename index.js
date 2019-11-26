@@ -29,7 +29,7 @@ var bind,
 settings = {
   addBlankToExternal: false,
   internalUrls: [],
-  internalHosts: [typeof location !== "undefined" && location !== null ? location.host : void 0]
+  internalHosts: []
 };
 
 // Override the settings

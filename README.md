@@ -16,6 +16,11 @@ In a your bootstrapping JS:
 parseAnchors = require('vue-routing-anchor-parser')
 directive.settings({
   addBlankToExternal: false,
+  internalUrls: [
+    /^https?:\/\/localhost:\d+/
+    /^https?:\/\/([\w\-]+\.)?netlify\.com/
+    /^https?:\/\/([\w\-]+\.)?bukwild\.com/
+  ]
   internalHosts: [
     'localhost',
     'example.com',
@@ -32,9 +37,14 @@ In `nuxt.config.js`:
   modules: [
     ['vue-routing-anchor-parser/nuxt/module', {
         addBlankToExternal: true,
+        internalUrls: [
+          /^https?:\/\/localhost:\d+/
+          /^https?:\/\/([\w\-]+\.)?netlify\.com/
+          /^https?:\/\/([\w\-]+\.)?bukwild\.com/
+        ]
         internalHosts: [
           'localhost',
-          'example.com',
+          'bukwild.com',
         ]
     }]
   ]
@@ -43,7 +53,8 @@ In `nuxt.config.js`:
 #### Options
 
 - `addBlankToExternal`: Set to true to add `target='_blank'` to external links
-- `internalHosts`: Array of host names that, when found in `href` attributes, get treated as internal links
+- `internalUrls`: Array of regexes that, when found in `href` attributes, get treated as internal links.
+- `internalHosts`: Array of host names that, when found in `href` attributes, get treated as internal links.  These are checked after `internalUrls`.
 
 ## Usage
 

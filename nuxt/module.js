@@ -3,10 +3,19 @@
  */
 const path = require('path')
 module.exports = function (options) {
+		
+	// Register the plugin
 	this.addPlugin({
 		src: path.resolve(__dirname, 'plugin.js'),
 		ssr: false,
-		options: JSON.stringify(options),
+		
+		// Serialize Regexes. I found I needed to manually double escape
+		// backslashes for this to work.
+		// https://stackoverflow.com/a/33416684/59160
+		options: JSON.stringify(options, function(key,  val) { 
+			return val instanceof RegExp ? 
+				'__REGEX' + val.toString().replace(/\\/g, '\\\\') : val;
+		}),
 	});
 }
 

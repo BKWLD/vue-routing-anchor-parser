@@ -28,6 +28,7 @@ var bind,
 // Default settings
 settings = {
   addBlankToExternal: false,
+  internalUrls: [],
   internalHosts: [typeof location !== "undefined" && location !== null ? location.host : void 0]
 };
 
@@ -70,14 +71,24 @@ var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) 
 
 // Test if an anchor is an internal link
 var isInternal = exports.isInternal = function isInternal(url) {
-  var ref;
+  var i, len, ref, ref1, urlRegex;
   url = makeUrlObj(url);
   if (url.href.match(/^\/[^\/]/)) {
+
     // Does it begin with a / and not an //
     return true;
   }
-  if (ref = url.host, indexOf.call(settings.internalHosts, ref) >= 0) {
-    // Does the host match the comparer
+  ref = settings.internalUrls;
+
+  // Does the hot match internal URLs
+  for (i = 0, len = ref.length; i < len; i++) {
+    urlRegex = ref[i];
+    if (url.href.match(urlRegex)) {
+      return true;
+    }
+  }
+  if (ref1 = url.host, indexOf.call(settings.internalHosts, ref1) >= 0) {
+    // Does the host match internal hosts
     return true;
   }
 };

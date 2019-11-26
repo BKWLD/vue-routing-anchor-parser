@@ -5,8 +5,9 @@ import merge from 'lodash/merge'
 # Default settings
 settings =
 	addBlankToExternal: false
+	internalUrls: []
 	internalHosts: [ location?.host ]
-
+	
 # Override the settings
 mergeSettings = (choices) -> merge settings, choices
 
@@ -33,11 +34,15 @@ export handleAnchor = (anchor, router) ->
 # Test if an anchor is an internal link
 export isInternal = (url) ->
 	url = makeUrlObj url
-
+	
 	# Does it begin with a / and not an //
 	return true if url.href.match /^\/[^\/]/
+	
+	# Does the hot match internal URLs
+	for urlRegex in settings.internalUrls
+		return true if url.href.match urlRegex
 
-	# Does the host match the comparer
+	# Does the host match internal hosts
 	return true if url.host in settings.internalHosts
 
 # Make a URL instance from url strings

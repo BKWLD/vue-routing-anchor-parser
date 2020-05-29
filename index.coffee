@@ -25,25 +25,24 @@ bind = (el, binding, vnode) ->
 
 # Check an anchor tag
 export handleAnchor = (anchor, router) ->
-	if href = anchor.getAttribute 'href'
-		url = makeUrlObj href
+	if url = anchor.getAttribute 'href'
 		if isInternal url
 		then handleInternal anchor, url, router
 		else handleExternal anchor
 
 # Test if an anchor is an internal link
 export isInternal = (url) ->
-	url = makeUrlObj url
+	urlObj = makeUrlObj url
 	
 	# Does it begin with a / and not an //
-	return true if url.href.match /^\/[^\/]/
+	return true if urlObj.href.match /^\/[^\/]/
 	
 	# Does the hot match internal URLs
 	for urlRegex in settings.internalUrls
-		return true if url.href.match urlRegex
+		return true if urlObj.href.match urlRegex
 
 	# Does the host match internal hosts
-	return true if url.host in settings.internalHosts
+	return true if urlObj.host in settings.internalHosts
 
 # Make a URL instance from url strings
 makeUrlObj = (url) ->
@@ -58,15 +57,20 @@ makeUrlObj = (url) ->
 	# Return URL object
 	return new URL url
 
+# Make routeable path
+export makeRouterPath = (url) ->
+	urlObj = makeUrlObj url
+	"#{urlObj.pathname}#{urlObj.query}#{urlObj.hash}"
+
 # Add click bindings to internal links that resolve.  Thus, if the Vue doesn't
 # know about a route, it will not be handled by vue-router.  Though it won't
 # open in a new window.
 handleInternal = (anchor, url, router) ->
-	route = path: "#{url.pathname}#{url.query}"
-	if router.resolve(route).route.matched.length
+	path = makeRouterPath url
+	if router.resolve({ path }).route.matched.length
 		anchor.addEventListener 'click', (e) ->
 			e.preventDefault()
-			router.push path: "#{url.pathname}#{url.query}#{url.hash}"
+			router.push { path }
 
 # Add target blank to external links
 handleExternal = (anchor) ->

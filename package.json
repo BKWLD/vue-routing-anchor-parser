@@ -4,7 +4,7 @@
   "description": "A Vue directive that parses child elements for internally linking anchor tags and binds their click events to use Vue Router's push().",
   "main": "index.js",
   "scripts": {
-    "build": "coffee -ct index.coffee",
+    "build": "coffee -ct index.coffee && coffee -ct smart-link.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

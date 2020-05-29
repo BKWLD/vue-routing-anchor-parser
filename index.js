@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isInternal = exports.handleAnchor = undefined;
+exports.makeRouterPath = exports.isInternal = exports.handleAnchor = undefined;
 
 var _urlParse = require('url-parse');
 
@@ -58,9 +58,8 @@ bind = function bind(el, binding, vnode) {
 
 // Check an anchor tag
 var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) {
-  var href, url;
-  if (href = anchor.getAttribute('href')) {
-    url = makeUrlObj(href);
+  var url;
+  if (url = anchor.getAttribute('href')) {
     if (isInternal(url)) {
       return handleInternal(anchor, url, router);
     } else {
@@ -71,9 +70,9 @@ var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) 
 
 // Test if an anchor is an internal link
 var isInternal = exports.isInternal = function isInternal(url) {
-  var i, len, ref, ref1, urlRegex;
-  url = makeUrlObj(url);
-  if (url.href.match(/^\/[^\/]/)) {
+  var i, len, ref, ref1, urlObj, urlRegex;
+  urlObj = makeUrlObj(url);
+  if (urlObj.href.match(/^\/[^\/]/)) {
 
     // Does it begin with a / and not an //
     return true;
@@ -83,11 +82,11 @@ var isInternal = exports.isInternal = function isInternal(url) {
   // Does the hot match internal URLs
   for (i = 0, len = ref.length; i < len; i++) {
     urlRegex = ref[i];
-    if (url.href.match(urlRegex)) {
+    if (urlObj.href.match(urlRegex)) {
       return true;
     }
   }
-  if (ref1 = url.host, indexOf.call(settings.internalHosts, ref1) >= 0) {
+  if (ref1 = urlObj.host, indexOf.call(settings.internalHosts, ref1) >= 0) {
     // Does the host match internal hosts
     return true;
   }
@@ -111,20 +110,23 @@ makeUrlObj = function makeUrlObj(url) {
   return new _urlParse2.default(url);
 };
 
+// Make routeable path
+var makeRouterPath = exports.makeRouterPath = function makeRouterPath(url) {
+  var urlObj;
+  urlObj = makeUrlObj(url);
+  return '' + urlObj.pathname + urlObj.query + urlObj.hash;
+};
+
 // Add click bindings to internal links that resolve.  Thus, if the Vue doesn't
 // know about a route, it will not be handled by vue-router.  Though it won't
 // open in a new window.
 handleInternal = function handleInternal(anchor, url, router) {
-  var route;
-  route = {
-    path: '' + url.pathname + url.query
-  };
-  if (router.resolve(route).route.matched.length) {
+  var path;
+  path = makeRouterPath(url);
+  if (router.resolve({ path: path }).route.matched.length) {
     return anchor.addEventListener('click', function (e) {
       e.preventDefault();
-      return router.push({
-        path: '' + url.pathname + url.query + url.hash
-      });
+      return router.push({ path: path });
     });
   }
 };

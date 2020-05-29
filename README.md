@@ -40,11 +40,14 @@ In `nuxt.config.js`:
         internalUrls: [
           /^https?:\/\/localhost:\d+/
           /^https?:\/\/([\w\-]+\.)?netlify\.com/
-          /^https?:\/\/([\w\-]+\.)?bukwild\.com/
+          /^https?:\/\/(www\.)?bukwild\.com/
         ]
         internalHosts: [
           'localhost',
           'bukwild.com',
+        ]
+        sameWindowUrls: [
+          /^https?:\/\/(shop\.)?bukwild\.com/
         ]
     }]
   ]
@@ -55,6 +58,7 @@ In `nuxt.config.js`:
 - `addBlankToExternal`: Set to true to add `target='_blank'` to external links
 - `internalUrls`: Array of regexes that, when found in `href` attributes, get treated as internal links.
 - `internalHosts`: Array of host names that, when found in `href` attributes, get treated as internal links.  These are checked after `internalUrls`.
+- `sameWindowUrls`: Array of regexes that are checked when a URL is not internal. If there is a match, the URL opens in the same window rather opening a new window.
 
 ## Usage
 

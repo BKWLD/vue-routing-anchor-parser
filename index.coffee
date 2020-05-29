@@ -6,6 +6,7 @@ import merge from 'lodash/merge'
 settings =
 	addBlankToExternal: false
 	internalUrls: []
+	sameWindowUrls: []
 	internalHosts: []
 	
 # Override the settings
@@ -28,7 +29,7 @@ export handleAnchor = (anchor, router) ->
 	if url = anchor.getAttribute 'href'
 		if isInternal url
 		then handleInternal anchor, url, router
-		else handleExternal anchor
+		else handleExternal anchor, url
 
 # Test if an anchor is an internal link
 export isInternal = (url) ->
@@ -57,11 +58,6 @@ makeUrlObj = (url) ->
 	# Return URL object
 	return new URL url
 
-# Make routeable path
-export makeRouterPath = (url) ->
-	urlObj = makeUrlObj url
-	"#{urlObj.pathname}#{urlObj.query}#{urlObj.hash}"
-
 # Add click bindings to internal links that resolve.  Thus, if the Vue doesn't
 # know about a route, it will not be handled by vue-router.  Though it won't
 # open in a new window.
@@ -72,10 +68,23 @@ handleInternal = (anchor, url, router) ->
 			e.preventDefault()
 			router.push { path }
 
+# Make routeable path
+export makeRouterPath = (url) ->
+	urlObj = makeUrlObj url
+	"#{urlObj.pathname}#{urlObj.query}#{urlObj.hash}"
+
 # Add target blank to external links
-handleExternal = (anchor) ->
-	if settings.addBlankToExternal and not anchor.hasAttribute('target')
+handleExternal = (anchor, url) ->
+	if shouldOpenInNewWindow(url) and not anchor.hasAttribute('target')
 		anchor.setAttribute 'target', '_blank'
+
+# Should extrnal link open in a new window
+export shouldOpenInNewWindow = (url) ->
+	return false unless settings.addBlankToExternal
+	urlObj = makeUrlObj url
+	for urlRegex in settings.sameWindowUrls
+		return false if urlObj.href.match urlRegex
+	return true
 
 # Directive definition with settings method for overriding the default settings.
 # I'm relying on Browser garbage collection to cleanup listeners.

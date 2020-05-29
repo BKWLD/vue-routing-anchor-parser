@@ -1,7 +1,7 @@
 # Render a nuxt-link if an internal link or a v-parse-anchor wrapped a if not. 
 # This is so that link pre-fetching works.
 
-import { isInternal, makeRouterPath } from './index'
+import { isInternal, makeRouterPath, shouldOpenInNewWindow } from './index'
 
 export default 
 	name: 'SmartLink'
@@ -31,6 +31,6 @@ export default
 		else create 'a', 
 			attrs: 
 				href: to
-				target: '_blank'
+				target: '_blank' if shouldOpenInNewWindow to
 			class: staticClass
 		, children

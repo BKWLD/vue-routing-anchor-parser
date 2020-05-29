@@ -38,7 +38,7 @@ exports.default = {
       return create('a', {
         attrs: {
           href: to,
-          target: '_blank'
+          target: (0, _index.shouldOpenInNewWindow)(to) ? '_blank' : void 0
         },
         class: staticClass
       }, children);

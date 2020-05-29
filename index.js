@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.makeRouterPath = exports.isInternal = exports.handleAnchor = undefined;
+exports.shouldOpenInNewWindow = exports.makeRouterPath = exports.isInternal = exports.handleAnchor = undefined;
 
 var _urlParse = require('url-parse');
 
@@ -29,6 +29,7 @@ var bind,
 settings = {
   addBlankToExternal: false,
   internalUrls: [],
+  sameWindowUrls: [],
   internalHosts: []
 };
 
@@ -63,7 +64,7 @@ var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) 
     if (isInternal(url)) {
       return handleInternal(anchor, url, router);
     } else {
-      return handleExternal(anchor);
+      return handleExternal(anchor, url);
     }
   }
 };
@@ -110,13 +111,6 @@ makeUrlObj = function makeUrlObj(url) {
   return new _urlParse2.default(url);
 };
 
-// Make routeable path
-var makeRouterPath = exports.makeRouterPath = function makeRouterPath(url) {
-  var urlObj;
-  urlObj = makeUrlObj(url);
-  return '' + urlObj.pathname + urlObj.query + urlObj.hash;
-};
-
 // Add click bindings to internal links that resolve.  Thus, if the Vue doesn't
 // know about a route, it will not be handled by vue-router.  Though it won't
 // open in a new window.
@@ -131,11 +125,35 @@ handleInternal = function handleInternal(anchor, url, router) {
   }
 };
 
+// Make routeable path
+var makeRouterPath = exports.makeRouterPath = function makeRouterPath(url) {
+  var urlObj;
+  urlObj = makeUrlObj(url);
+  return '' + urlObj.pathname + urlObj.query + urlObj.hash;
+};
+
 // Add target blank to external links
-handleExternal = function handleExternal(anchor) {
-  if (settings.addBlankToExternal && !anchor.hasAttribute('target')) {
+handleExternal = function handleExternal(anchor, url) {
+  if (shouldOpenInNewWindow(url) && !anchor.hasAttribute('target')) {
     return anchor.setAttribute('target', '_blank');
   }
+};
+
+// Should extrnal link open in a new window
+var shouldOpenInNewWindow = exports.shouldOpenInNewWindow = function shouldOpenInNewWindow(url) {
+  var i, len, ref, urlObj, urlRegex;
+  if (!settings.addBlankToExternal) {
+    return false;
+  }
+  urlObj = makeUrlObj(url);
+  ref = settings.sameWindowUrls;
+  for (i = 0, len = ref.length; i < len; i++) {
+    urlRegex = ref[i];
+    if (urlObj.href.match(urlRegex)) {
+      return false;
+    }
+  }
+  return true;
 };
 
 exports.default = {

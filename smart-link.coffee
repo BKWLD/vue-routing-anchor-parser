@@ -6,6 +6,9 @@ import { isInternal, makeRouterPath, shouldOpenInNewWindow } from './index'
 export default 
 	name: 'SmartLink'
 	functional: true
+	
+	# The URL gets passed here
+	props: to: String
 
 	# Destructure the props and data we care about
 	render: (create, { 

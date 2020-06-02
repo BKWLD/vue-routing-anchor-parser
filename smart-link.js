@@ -9,6 +9,11 @@ var _index = require('./index');
 exports.default = {
   name: 'SmartLink',
   functional: true,
+
+  // The URL gets passed here
+  props: {
+    to: String
+  },
   // Destructure the props and data we care about
   render: function render(create, _ref) {
     var to = _ref.props.to,

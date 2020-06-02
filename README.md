@@ -35,22 +35,23 @@ In `nuxt.config.js`:
 
 ```js
   modules: [
-    ['vue-routing-anchor-parser/nuxt/module', {
-        addBlankToExternal: true,
-        internalUrls: [
-          /^https?:\/\/localhost:\d+/
-          /^https?:\/\/([\w\-]+\.)?netlify\.com/
-          /^https?:\/\/(www\.)?bukwild\.com/
-        ]
-        internalHosts: [
-          'localhost',
-          'bukwild.com',
-        ]
-        sameWindowUrls: [
-          /^https?:\/\/(shop\.)?bukwild\.com/
-        ]
-    }]
-  ]
+    'vue-routing-anchor-parser/nuxt/module',
+  ],
+  anchorParser: {
+    addBlankToExternal: true,
+    internalUrls: [
+      /^https?:\/\/localhost:\d+/
+      /^https?:\/\/([\w\-]+\.)?netlify\.com/
+      /^https?:\/\/(www\.)?bukwild\.com/
+    ]
+    internalHosts: [
+      'localhost',
+      'bukwild.com',
+    ]
+    sameWindowUrls: [
+      /^https?:\/\/(shop\.)?bukwild\.com/
+    ]
+  }
 ```
 
 #### Options

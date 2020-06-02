@@ -3,6 +3,9 @@
  */
 const path = require('path')
 module.exports = function (options) {
+
+	// Accept options from module or config
+	options = {...options, ...this.options.anchorParser}
 		
 	// Register the plugin
 	this.addPlugin({

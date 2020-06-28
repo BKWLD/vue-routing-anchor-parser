@@ -1,39 +1,41 @@
-# Render a nuxt-link if an internal link or a v-parse-anchor wrapped a if not. 
+# Render a nuxt-link if an internal link or a v-parse-anchor wrapped a if not.
 # This is so that link pre-fetching works.
 
 import { isInternal, makeRouterPath, shouldOpenInNewWindow } from './index'
 
-export default 
+export default
 	name: 'SmartLink'
 	functional: true
-	
+
 	# The URL gets passed here
 	props: to: String
 
 	# Destructure the props and data we care about
-	render: (create, { 
-		props: { to }, 
-		data: { attrs, staticClass } 
+	render: (create, {
+		props: { to }
+		data
 		children
-	}) -> 
+	}) ->
 
-		# If no "to", just return children
-		return children unless to
+		# If no "to", wrap children in a span so that children are nested
+		# consistently
+		if !to then return create 'span', data, children
 
 		# Test if an internal link
 		if isInternal to
 
 		# Render a nuxt-link
-		then create 'nuxt-link',
+		then create 'nuxt-link', {
+			...data
 			props: to: makeRouterPath to
-			attrs: attrs
-			class: staticClass
-		, children
-		
+		}, children
+
 		# Make a standard link that opens in a new window
-		else create 'a', 
-			attrs: 
+		else create 'a', {
+			...data
+			attrs: {
+				...data.attrs
 				href: to
 				target: '_blank' if shouldOpenInNewWindow to
-			class: staticClass
-		, children
+			}
+		}, children

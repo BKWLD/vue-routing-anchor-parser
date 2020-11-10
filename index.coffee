@@ -8,7 +8,7 @@ settings =
 	internalUrls: []
 	sameWindowUrls: []
 	internalHosts: []
-	
+
 # Override the settings
 mergeSettings = (choices) -> merge settings, choices
 
@@ -34,10 +34,10 @@ export handleAnchor = (anchor, router) ->
 # Test if an anchor is an internal link
 export isInternal = (url) ->
 	urlObj = makeUrlObj url
-	
+
 	# Does it begin with a / and not an //
 	return true if urlObj.href.match /^\/[^\/]/
-	
+
 	# Does the hot match internal URLs
 	for urlRegex in settings.internalUrls
 		return true if urlObj.href.match urlRegex
@@ -47,14 +47,14 @@ export isInternal = (url) ->
 
 # Make a URL instance from url strings
 makeUrlObj = (url) ->
-	
+
 	# Already a URL object
-	return url unless typeof url == 'string' 
-	
+	return url unless typeof url == 'string'
+
 	# If the URL is just an anchor, prepend the current path so that the URL obj
 	# doesn't add an automatic root path
-	url = window?.location.pathname + url if url.match /^#/ 
-	
+	url = window?.location.pathname + url if url.match /^#/
+
 	# Return URL object
 	return new URL url
 

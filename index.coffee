@@ -82,6 +82,7 @@ handleExternal = (anchor, url) ->
 export shouldOpenInNewWindow = (url) ->
 	return false unless settings.addBlankToExternal
 	urlObj = makeUrlObj url
+	return false if urlObj.href.match /^javascript:/ # A javascript:func() link
 	for urlRegex in settings.sameWindowUrls
 		return false if urlObj.href.match urlRegex
 	return true

@@ -74,12 +74,10 @@ var isInternal = exports.isInternal = function isInternal(url) {
   var i, len, ref, ref1, urlObj, urlRegex;
   urlObj = makeUrlObj(url);
   if (urlObj.href.match(/^\/[^\/]/)) {
-
     // Does it begin with a / and not an //
     return true;
   }
   ref = settings.internalUrls;
-
   // Does the hot match internal URLs
   for (i = 0, len = ref.length; i < len; i++) {
     urlRegex = ref[i];
@@ -96,17 +94,14 @@ var isInternal = exports.isInternal = function isInternal(url) {
 // Make a URL instance from url strings
 makeUrlObj = function makeUrlObj(url) {
   if (typeof url !== 'string') {
-
     // Already a URL object
     return url;
   }
   if (url.match(/^#/)) {
-
     // If the URL is just an anchor, prepend the current path so that the URL obj
     // doesn't add an automatic root path
     url = (typeof window !== "undefined" && window !== null ? window.location.pathname : void 0) + url;
   }
-
   // Return URL object
   return new _urlParse2.default(url);
 };
@@ -146,6 +141,10 @@ var shouldOpenInNewWindow = exports.shouldOpenInNewWindow = function shouldOpenI
     return false;
   }
   urlObj = makeUrlObj(url);
+  if (urlObj.href.match(/^javascript:/)) {
+    // A javascript:func() link
+    return false;
+  }
   ref = settings.sameWindowUrls;
   for (i = 0, len = ref.length; i < len; i++) {
     urlRegex = ref[i];

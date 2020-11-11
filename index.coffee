@@ -1,6 +1,5 @@
 # Deps
 import URL from 'url-parse'
-import merge from 'lodash/merge'
 
 # Default settings
 settings =
@@ -10,7 +9,7 @@ settings =
 	internalHosts: []
 
 # Override the settings
-mergeSettings = (choices) -> merge settings, choices
+mergeSettings = (choices) -> settings = {...settings, ...choices }
 
 # Add listeners to anchors
 bind = (el, binding, vnode) ->

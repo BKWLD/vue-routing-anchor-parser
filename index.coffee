@@ -35,7 +35,7 @@ export isInternal = (url) ->
 	urlObj = makeUrlObj url
 
 	# Does it begin with a / and not an //
-	return true if urlObj.href.match /^\/[^\/]/
+	return true if urlObj.href.match /^\/(?!\/)/
 
 	# Does the hot match internal URLs
 	for urlRegex in settings.internalUrls

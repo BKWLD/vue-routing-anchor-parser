@@ -69,12 +69,8 @@ Add `v-parse-anchors` wherever you want to parse child anchors for internal link
 
 #### `smart-link` component
 
-The `smart-link` component conditionally renders a `nuxt-link` if an internal link or an `a` tag if not. It's not registered by default by the Nuxt module.
+The `smart-link` component conditionally renders a `nuxt-link` if an internal link or an `a` tag if not.
 
-```js
-import SmartLink from 'vue-routing-anchor-parser/smart-link'
-Vue.component('smart-link', SmartLink)
-```
 ```html
 <smart-link to='https://www.bukwild.com'>Bukwild</smart-link>
 ```

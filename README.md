@@ -63,9 +63,11 @@ In `nuxt.config.js`:
 
 ## Usage
 
+#### `v-parse-anchors` directive
+
 Add `v-parse-anchors` wherever you want to parse child anchors for internal links and route clicks through Vue Router.  `href`s that begin with a slash, like `<a href='/path/to/something'>` are treated as internal automatically.  If an internal route can't be resolved by Vue Router, it falls back to a full page refresh (though never opens in a new window.)
 
-#### `smart-link`
+#### `smart-link` component
 
 The `smart-link` component conditionally renders a `nuxt-link` if an internal link or an `a` tag if not. It's not registered by default by the Nuxt module.
 

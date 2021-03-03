@@ -78,7 +78,7 @@ var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) 
 var isInternal = exports.isInternal = function isInternal(url) {
   var i, len, ref, ref1, urlObj, urlRegex;
   urlObj = makeUrlObj(url);
-  if (urlObj.href.match(/^\/[^\/]/)) {
+  if (urlObj.href.match(/^\/(?!\/)/)) {
     // Does it begin with a / and not an //
     return true;
   }

@@ -25,6 +25,11 @@ bind = (el, binding, vnode) ->
 
 # Check an anchor tag
 export handleAnchor = (anchor, router) ->
+
+	# If an explicit target attribute is set, then abort.  Assuming the author
+	# of the content knew what they were doing.
+	return if anchor.getAttribute 'target'
+
 	if url = anchor.getAttribute 'href'
 		if isInternal url
 		then handleInternal anchor, url, router

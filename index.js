@@ -65,6 +65,11 @@ bind = function bind(el, binding, vnode) {
 // Check an anchor tag
 var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) {
   var url;
+  // If an explicit target attribute is set, then
+  // don't massage the anchor tag
+  if (anchor.getAttribute('target')) {
+    return;
+  }
   if (url = anchor.getAttribute('href')) {
     if (isInternal(url)) {
       return handleInternal(anchor, url, router);

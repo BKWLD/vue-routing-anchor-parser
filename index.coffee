@@ -26,10 +26,8 @@ bind = (el, binding, vnode) ->
 # Check an anchor tag
 export handleAnchor = (anchor, router) ->
 
-	console.log 'anchor', anchor
-
-	# If an explicit target attribute is set, then
-	# don't massage the anchor tag
+	# If an explicit target attribute is set, then abort.  Assuming the author
+	# of the content knew what they were doing.
 	return if anchor.getAttribute 'target'
 
 	if url = anchor.getAttribute 'href'

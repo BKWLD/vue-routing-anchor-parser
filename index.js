@@ -65,7 +65,6 @@ bind = function bind(el, binding, vnode) {
 // Check an anchor tag
 var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) {
   var url;
-  console.log('anchor', anchor);
   // If an explicit target attribute is set, then
   // don't massage the anchor tag
   if (anchor.getAttribute('target')) {

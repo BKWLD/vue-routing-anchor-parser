@@ -27,9 +27,11 @@ module.exports = function (options) {
 	});
 
 	// Add smart-link automatically
-	this.addPlugin({
-		src: path.resolve(__dirname, 'smart-link.js'),
-	});
+	if (options.disableSmartLinkRegistration != true) {
+		this.addPlugin({
+			src: path.resolve(__dirname, 'smart-link.js'),
+		});
+	}
 }
 
 // Export meta for Nuxt

@@ -35,7 +35,8 @@ settings = {
   addBlankToExternal: false,
   internalUrls: [],
   sameWindowUrls: [],
-  internalHosts: []
+  internalHosts: [],
+  externalPaths: []
 };
 
 // Override the settings
@@ -81,21 +82,29 @@ var handleAnchor = exports.handleAnchor = function handleAnchor(anchor, router) 
 
 // Test if an anchor is an internal link
 var isInternal = exports.isInternal = function isInternal(url) {
-  var i, len, ref, ref1, urlObj, urlRegex;
+  var i, j, len, len1, pathRegex, ref, ref1, ref2, urlObj, urlRegex;
   urlObj = makeUrlObj(url);
+  ref = settings.externalPaths;
+  // Does it match externalPaths
+  for (i = 0, len = ref.length; i < len; i++) {
+    pathRegex = ref[i];
+    if (urlObj.pathname.match(pathRegex)) {
+      return false;
+    }
+  }
   if (urlObj.href.match(/^\/(?!\/)/)) {
     // Does it begin with a / and not an //
     return true;
   }
-  ref = settings.internalUrls;
-  // Does the hot match internal URLs
-  for (i = 0, len = ref.length; i < len; i++) {
-    urlRegex = ref[i];
+  ref1 = settings.internalUrls;
+  // Does the host match internal URLs
+  for (j = 0, len1 = ref1.length; j < len1; j++) {
+    urlRegex = ref1[j];
     if (urlObj.href.match(urlRegex)) {
       return true;
     }
   }
-  if (ref1 = urlObj.host, indexOf.call(settings.internalHosts, ref1) >= 0) {
+  if (ref2 = urlObj.host, indexOf.call(settings.internalHosts, ref2) >= 0) {
     // Does the host match internal hosts
     return true;
   }

@@ -7,6 +7,7 @@ settings =
 	internalUrls: []
 	sameWindowUrls: []
 	internalHosts: []
+	externalPaths: []
 
 # Override the settings
 mergeSettings = (choices) -> settings = {...settings, ...choices }
@@ -38,6 +39,10 @@ export handleAnchor = (anchor, router) ->
 # Test if an anchor is an internal link
 export isInternal = (url) ->
 	urlObj = makeUrlObj url
+
+	# Does it match externalPaths
+	for pathRegex in settings.externalPaths
+		return false if urlObj.pathname.match pathRegex
 
 	# Does it begin with a / and not an //
 	return true if urlObj.href.match /^\/(?!\/)/

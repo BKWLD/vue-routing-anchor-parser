@@ -48,6 +48,9 @@ In `nuxt.config.js`:
       'localhost',
       'bukwild.com',
     ]
+    externalPaths: [
+      /^\/react-landing-page/
+    ]
     sameWindowUrls: [
       /^https?:\/\/(shop\.)?bukwild\.com/
     ],
@@ -60,6 +63,7 @@ In `nuxt.config.js`:
 - `addBlankToExternal`: Set to true to add `target='_blank'` to external links
 - `internalUrls`: Array of regexes that, when found in `href` attributes, get treated as internal links.
 - `internalHosts`: Array of host names that, when found in `href` attributes, get treated as internal links.  These are checked after `internalUrls`.
+- `externalPaths`: Array of regexes that, when found in `href` attributes, get treated as external links.  Useful for sections of your website that are not part of this Vue/Nuxt app.
 - `sameWindowUrls`: Array of regexes that are checked when a URL is not internal. If there is a match, the URL opens in the same window rather opening a new window.
 - `disableSmartLinkRegistration`: Set to true to prevent the auto registration of `smart-link`
 

@@ -44,14 +44,17 @@ export isInternal = (url) ->
 	for pathRegex in settings.externalPaths
 		return false if urlObj.pathname.match pathRegex
 
-	# Does it begin with a / and not an //
+	# Does it begin with a / and not an // ?
 	return true if urlObj.href.match /^\/(?!\/)/
 
-	# Does the host match internal URLs
-	for urlRegex in settings.internalUrls
+	# Does it begin with a hash, meaning a link to down page?
+	return true if urlObj.href.match /^#/
+
+	# Does the host match internal URLs?
+	for urlRegex in settings.internalUrls?
 		return true if urlObj.href.match urlRegex
 
-	# Does the host match internal hosts
+	# Does the host match internal hosts?
 	return true if urlObj.host in settings.internalHosts
 
 # Make a URL instance from url strings
@@ -60,12 +63,9 @@ makeUrlObj = (url) ->
 	# Already a URL object
 	return url unless typeof url == 'string'
 
-	# If the URL is just an anchor, prepend the current path so that the URL obj
-	# doesn't add an automatic root path
-	url = window?.location.pathname + url if url.match /^#/
-
-	# Return URL object
-	return new URL url
+	# Return URL object. Passing an empty object to 2nd param so functions
+	# the same during SSR as client side
+	return new URL url, {}
 
 # Add click bindings to internal links that resolve.  Thus, if the Vue doesn't
 # know about a route, it will not be handled by vue-router.  Though it won't
@@ -87,7 +87,7 @@ handleExternal = (anchor, url) ->
 	if shouldOpenInNewWindow(url) and not anchor.hasAttribute('target')
 		anchor.setAttribute 'target', '_blank'
 
-# Should extrnal link open in a new window
+# Should external link open in a new window
 export shouldOpenInNewWindow = (url) ->
 	return false unless settings.addBlankToExternal
 	urlObj = makeUrlObj url

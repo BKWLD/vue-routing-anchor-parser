@@ -93,11 +93,15 @@ var isInternal = exports.isInternal = function isInternal(url) {
     }
   }
   if (urlObj.href.match(/^\/(?!\/)/)) {
-    // Does it begin with a / and not an //
+    // Does it begin with a / and not an // ?
     return true;
   }
-  ref1 = settings.internalUrls;
-  // Does the host match internal URLs
+  if (urlObj.href.match(/^#/)) {
+    // Does it begin with a hash, meaning a link to down page?
+    return true;
+  }
+  ref1 = settings.internalUrls != null;
+  // Does the host match internal URLs?
   for (j = 0, len1 = ref1.length; j < len1; j++) {
     urlRegex = ref1[j];
     if (urlObj.href.match(urlRegex)) {
@@ -105,7 +109,7 @@ var isInternal = exports.isInternal = function isInternal(url) {
     }
   }
   if (ref2 = urlObj.host, indexOf.call(settings.internalHosts, ref2) >= 0) {
-    // Does the host match internal hosts
+    // Does the host match internal hosts?
     return true;
   }
 };
@@ -116,13 +120,9 @@ makeUrlObj = function makeUrlObj(url) {
     // Already a URL object
     return url;
   }
-  if (url.match(/^#/)) {
-    // If the URL is just an anchor, prepend the current path so that the URL obj
-    // doesn't add an automatic root path
-    url = (typeof window !== "undefined" && window !== null ? window.location.pathname : void 0) + url;
-  }
-  // Return URL object
-  return new _urlParse2.default(url);
+  // Return URL object. Passing an empty object to 2nd param so functions
+  // the same during SSR as client side
+  return new _urlParse2.default(url, {});
 };
 
 // Add click bindings to internal links that resolve.  Thus, if the Vue doesn't
@@ -153,7 +153,7 @@ handleExternal = function handleExternal(anchor, url) {
   }
 };
 
-// Should extrnal link open in a new window
+// Should external link open in a new window
 var shouldOpenInNewWindow = exports.shouldOpenInNewWindow = function shouldOpenInNewWindow(url) {
   var i, len, ref, urlObj, urlRegex;
   if (!settings.addBlankToExternal) {

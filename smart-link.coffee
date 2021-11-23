@@ -14,6 +14,7 @@ export default
 	render: (create, {
 		props: { to }
 		data
+		listeners
 		children
 	}) ->
 
@@ -27,6 +28,7 @@ export default
 		# Render a nuxt-link
 		then create 'nuxt-link', {
 			...data
+			nativeOn: listeners # nuxt-link doesn't forward events on it's own
 			props: to: makeRouterPath to
 		}, children
 

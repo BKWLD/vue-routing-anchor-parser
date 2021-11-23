@@ -30,6 +30,7 @@ exports.default = {
   render: function render(create, _ref) {
     var to = _ref.props.to,
         data = _ref.data,
+        listeners = _ref.listeners,
         children = _ref.children;
 
     if (!to) {
@@ -39,6 +40,7 @@ exports.default = {
     if ((0, _index.isInternal)(to)) {
       // Render a nuxt-link
       return create('nuxt-link', _extends({}, data, {
+        nativeOn: listeners, // nuxt-link doesn't forward events on it's own
         props: {
           to: (0, _index.makeRouterPath)(to)
         }

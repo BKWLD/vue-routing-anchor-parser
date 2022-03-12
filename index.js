@@ -100,7 +100,7 @@ var isInternal = exports.isInternal = function isInternal(url) {
     // Does it begin with a hash, meaning a link to down page?
     return true;
   }
-  ref1 = settings.internalUrls != null;
+  ref1 = settings.internalUrls;
   // Does the host match internal URLs?
   for (j = 0, len1 = ref1.length; j < len1; j++) {
     urlRegex = ref1[j];

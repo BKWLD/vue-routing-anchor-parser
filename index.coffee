@@ -51,7 +51,7 @@ export isInternal = (url) ->
 	return true if urlObj.href.match /^#/
 
 	# Does the host match internal URLs?
-	for urlRegex in settings.internalUrls?
+	for urlRegex in settings.internalUrls
 		return true if urlObj.href.match urlRegex
 
 	# Does the host match internal hosts?

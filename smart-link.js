@@ -28,17 +28,14 @@ exports.default = {
   },
 
   // Destructure the props and data we care about
-  // props: { to, internalTrailingSlash }
   render: function render(create, _ref) {
-    var props = _ref.props,
+    var _ref$props = _ref.props,
+        to = _ref$props.to,
+        internalTrailingSlash = _ref$props.internalTrailingSlash,
         data = _ref.data,
         listeners = _ref.listeners,
         children = _ref.children;
 
-    var internalTrailingSlash, to;
-    to = props.to;
-    internalTrailingSlash = props.internalTrailingSlash;
-    console.log('rendering link, to is', to, 'internaltrailingslash is', internalTrailingSlash, 'props are', props);
     if (!to) {
       return create('span', data, children);
     }

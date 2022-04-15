@@ -13,16 +13,11 @@ export default
 
 	# Destructure the props and data we care about
 	render: (create, {
-		# props: { to, internalTrailingSlash }
-		props
+		props: { to, internalTrailingSlash }
 		data
 		listeners
 		children
 	}) ->
-		to = props.to
-		internalTrailingSlash = props.internalTrailingSlash
-		console.log 'rendering link, to is', to, 'internaltrailingslash is', internalTrailingSlash, 'props are', props
-
 		# If no "to", wrap children in a span so that children are nested
 		# consistently
 		if !to then return create 'span', data, children

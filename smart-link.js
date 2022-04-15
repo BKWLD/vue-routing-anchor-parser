@@ -22,17 +22,23 @@ var _extends = Object.assign || function (target) {
 exports.default = {
   name: 'SmartLink',
   functional: true,
-  // The URL gets passed here
   props: {
-    to: String
+    to: String, // The URL gets passed here
+    internalTrailingSlash: Boolean // Optionally add trailing slash if is internal link
   },
+
   // Destructure the props and data we care about
+  // props: { to, internalTrailingSlash }
   render: function render(create, _ref) {
-    var to = _ref.props.to,
+    var props = _ref.props,
         data = _ref.data,
         listeners = _ref.listeners,
         children = _ref.children;
 
+    var internalTrailingSlash, to;
+    to = props.to;
+    internalTrailingSlash = props.internalTrailingSlash;
+    console.log('rendering link, to is', to, 'internaltrailingslash is', internalTrailingSlash, 'props are', props);
     if (!to) {
       return create('span', data, children);
     }
@@ -42,7 +48,7 @@ exports.default = {
       return create('nuxt-link', _extends({}, data, {
         nativeOn: listeners, // nuxt-link doesn't forward events on it's own
         props: {
-          to: (0, _index.makeRouterPath)(to)
+          to: internalTrailingSlash ? (0, _index.makeRouterPath)((0, _index.addTrailingSlash)(to)) : (0, _index.makeRouterPath)(to)
         }
       }), children);
     } else {

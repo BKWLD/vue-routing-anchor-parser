@@ -96,6 +96,12 @@ export shouldOpenInNewWindow = (url) ->
 		return false if urlObj.href.match urlRegex
 	return true
 
+# add trailing slash 
+export addTrailingSlash = (to) -> 
+	url = new URL to
+	url.pathname += if url.pathname.endsWith "/" then "" else "/"
+	url.toString()
+
 # Directive definition with settings method for overriding the default settings.
 # I'm relying on Browser garbage collection to cleanup listeners.
 export default

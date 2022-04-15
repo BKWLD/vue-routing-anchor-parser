@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.shouldOpenInNewWindow = exports.makeRouterPath = exports.isInternal = exports.handleAnchor = undefined;
+exports.addTrailingSlash = exports.shouldOpenInNewWindow = exports.makeRouterPath = exports.isInternal = exports.handleAnchor = undefined;
 
 var _urlParse = require('url-parse');
 
@@ -172,6 +172,14 @@ var shouldOpenInNewWindow = exports.shouldOpenInNewWindow = function shouldOpenI
     }
   }
   return true;
+};
+
+// add trailing slash 
+var addTrailingSlash = exports.addTrailingSlash = function addTrailingSlash(to) {
+  var url;
+  url = new _urlParse2.default(to);
+  url.pathname += url.pathname.endsWith("/") ? "" : "/";
+  return url.toString();
 };
 
 exports.default = {

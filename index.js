@@ -179,13 +179,11 @@ var shouldOpenInNewWindow = exports.shouldOpenInNewWindow = function shouldOpenI
 var addTrailingSlash = exports.addTrailingSlash = function addTrailingSlash(to) {
   var url;
   url = new _urlParse2.default(to);
-  url.pathname += url.pathname.endsWith("/") ? "" : "/";
+  url.pathname += url.pathname.match(/\/$/) ? "" : "/";
   return url.toString();
 };
 
 exports.default = {
-  // if to.match /\/$/ then to else to + '/'
-
   // Directive definition with settings method for overriding the default settings.
   // I'm relying on Browser garbage collection to cleanup listeners.
   bind: bind,

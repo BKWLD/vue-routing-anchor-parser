@@ -100,7 +100,7 @@ export shouldOpenInNewWindow = (url) ->
 # add trailing slash 
 export addTrailingSlash = (to) -> 
 	url = new URL to
-	url.pathname += if url.pathname.endsWith "/" then "" else "/"
+	url.pathname += if url.pathname.match(/\/$/) then "" else "/"
 	url.toString()
 
 # Directive definition with settings method for overriding the default settings.

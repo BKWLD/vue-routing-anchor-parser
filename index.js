@@ -33,6 +33,7 @@ var bind,
 // Default settings
 settings = {
   addBlankToExternal: false,
+  addTrailingSlashToInternal: false,
   internalUrls: [],
   sameWindowUrls: [],
   internalHosts: [],
@@ -183,6 +184,8 @@ var addTrailingSlash = exports.addTrailingSlash = function addTrailingSlash(to) 
 };
 
 exports.default = {
+  // if to.match /\/$/ then to else to + '/'
+
   // Directive definition with settings method for overriding the default settings.
   // I'm relying on Browser garbage collection to cleanup listeners.
   bind: bind,

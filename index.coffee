@@ -4,6 +4,7 @@ import URL from 'url-parse'
 # Default settings
 settings =
 	addBlankToExternal: false
+	addTrailingSlashToInternal: false
 	internalUrls: []
 	sameWindowUrls: []
 	internalHosts: []

@@ -9,14 +9,14 @@ export default
 
 	props:
 		to: String # The URL gets passed here
-		internalTrailingSlash: Boolean # Optionally add trailing slash if is internal link
 
 	# Destructure the props and data we care about
 	render: (create, {
-		props: { to, internalTrailingSlash }
+		props: { to }
 		data
 		listeners
 		children
+		parent
 	}) ->
 		# If no "to", wrap children in a span so that children are nested
 		# consistently
@@ -30,7 +30,7 @@ export default
 			...data
 			nativeOn: listeners # nuxt-link doesn't forward events on it's own
 			props: 
-				to: if internalTrailingSlash 
+				to: if parent?.$config?.anchorParser?.addTrailingSlashToInternal 
 				then makeRouterPath addTrailingSlash to 
 				else makeRouterPath to
 		}, children

@@ -6,6 +6,7 @@ module.exports = function (options) {
 
 	// Accept options from module or config
 	options = {...options, ...this.options.anchorParser}
+	this.options.publicRuntimeConfig.anchorParser = options
 
 	// Register a plugin that applys the settings for SSR and non-SSR
 	this.addPlugin({

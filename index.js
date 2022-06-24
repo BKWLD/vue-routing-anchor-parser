@@ -175,12 +175,14 @@ var shouldOpenInNewWindow = exports.shouldOpenInNewWindow = function shouldOpenI
   return true;
 };
 
-// add trailing slash 
-var addTrailingSlash = exports.addTrailingSlash = function addTrailingSlash(to) {
-  var url;
-  url = new _urlParse2.default(to);
-  url.pathname += url.pathname.match(/\/$/) ? "" : "/";
-  return url.toString();
+// Add trailing slash if one is missing, returning a string
+var addTrailingSlash = exports.addTrailingSlash = function addTrailingSlash(url) {
+  var urlObj;
+  urlObj = makeUrlObj(url);
+  if (urlObj.pathname.match(/\/$/)) {
+    urlObj.pathname += '/';
+  }
+  return urlObj.toString();
 };
 
 exports.default = {

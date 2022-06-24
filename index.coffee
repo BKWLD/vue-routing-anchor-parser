@@ -4,6 +4,7 @@ import URL from 'url-parse'
 # Default settings
 settings =
 	addBlankToExternal: false
+	addTrailingSlashToInternal: false
 	internalUrls: []
 	sameWindowUrls: []
 	internalHosts: []
@@ -95,6 +96,12 @@ export shouldOpenInNewWindow = (url) ->
 	for urlRegex in settings.sameWindowUrls
 		return false if urlObj.href.match urlRegex
 	return true
+
+# add trailing slash 
+export addTrailingSlash = (to) -> 
+	url = new URL to
+	url.pathname += if url.pathname.match(/\/$/) then "" else "/"
+	url.toString()
 
 # Directive definition with settings method for overriding the default settings.
 # I'm relying on Browser garbage collection to cleanup listeners.

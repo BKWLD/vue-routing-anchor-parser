@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.shouldOpenInNewWindow = exports.makeRouterPath = exports.isInternal = exports.handleAnchor = undefined;
+exports.addTrailingSlash = exports.shouldOpenInNewWindow = exports.makeRouterPath = exports.isInternal = exports.handleAnchor = undefined;
 
 var _urlParse = require('url-parse');
 
@@ -33,6 +33,7 @@ var bind,
 // Default settings
 settings = {
   addBlankToExternal: false,
+  addTrailingSlashToInternal: false,
   internalUrls: [],
   sameWindowUrls: [],
   internalHosts: [],
@@ -172,6 +173,14 @@ var shouldOpenInNewWindow = exports.shouldOpenInNewWindow = function shouldOpenI
     }
   }
   return true;
+};
+
+// add trailing slash 
+var addTrailingSlash = exports.addTrailingSlash = function addTrailingSlash(to) {
+  var url;
+  url = new _urlParse2.default(to);
+  url.pathname += url.pathname.match(/\/$/) ? "" : "/";
+  return url.toString();
 };
 
 exports.default = {

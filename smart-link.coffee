@@ -1,7 +1,12 @@
 # Render a nuxt-link if an internal link or a v-parse-anchor wrapped a if not.
 # This is so that link pre-fetching works.
 
-import { isInternal, makeRouterPath, shouldOpenInNewWindow, addTrailingSlash } from './index'
+import {
+	isInternal,
+	makeRouterPath,
+	shouldOpenInNewWindow,
+	addTrailingSlash
+} from './index'
 
 export default
 	name: 'SmartLink'
@@ -18,9 +23,14 @@ export default
 		children
 		parent
 	}) ->
+
 		# If no "to", wrap children in a span so that children are nested
 		# consistently
 		if !to then return create 'span', data, children
+
+		# Add trailing slashes if configured to
+		if parent?.$config?.anchorParser?.addTrailingSlashToInternal
+		then to = addTrailingSlash to
 
 		# Test if an internal link
 		if isInternal to
@@ -29,10 +39,7 @@ export default
 		then create 'nuxt-link', {
 			...data
 			nativeOn: listeners # nuxt-link doesn't forward events on it's own
-			props: 
-				to: if parent?.$config?.anchorParser?.addTrailingSlashToInternal 
-				then makeRouterPath addTrailingSlash to 
-				else makeRouterPath to
+			props: makeRouterPath to, { router: parent?.$router }
 		}, children
 
 		# Make a standard link that opens in a new window

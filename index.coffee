@@ -72,16 +72,23 @@ makeUrlObj = (url) ->
 # know about a route, it will not be handled by vue-router.  Though it won't
 # open in a new window.
 handleInternal = (anchor, url, router) ->
-	path = makeRouterPath url
+	path = makeRouterPath url, { router }
 	if router.resolve({ path }).route.matched.length
 		anchor.addEventListener 'click', (e) ->
 			e.preventDefault()
 			router.push { path }
 
 # Make routeable path
-export makeRouterPath = (url) ->
+export makeRouterPath = (url, { router } = {}) ->
 	urlObj = makeUrlObj url
-	"#{urlObj.pathname}#{urlObj.query}#{urlObj.hash}"
+
+	# Remove the router.base from the path, if it exists
+	path = urlObj.pathname
+	if (base = router?.options?.base) and path.indexOf(base) == 0
+	then path = '/' + path.slice base.length
+
+	# Create path with query and hash
+	"#{path}#{urlObj.query}#{urlObj.hash}"
 
 # Add target blank to external links
 handleExternal = (anchor, url) ->

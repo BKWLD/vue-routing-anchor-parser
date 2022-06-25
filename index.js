@@ -131,7 +131,7 @@ makeUrlObj = function makeUrlObj(url) {
 // open in a new window.
 handleInternal = function handleInternal(anchor, url, router) {
   var path;
-  path = makeRouterPath(url);
+  path = makeRouterPath(url, { router: router });
   if (router.resolve({ path: path }).route.matched.length) {
     return anchor.addEventListener('click', function (e) {
       e.preventDefault();
@@ -142,9 +142,18 @@ handleInternal = function handleInternal(anchor, url, router) {
 
 // Make routeable path
 var makeRouterPath = exports.makeRouterPath = function makeRouterPath(url) {
-  var urlObj;
+  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      router = _ref.router;
+
+  var base, path, ref, urlObj;
   urlObj = makeUrlObj(url);
-  return '' + urlObj.pathname + urlObj.query + urlObj.hash;
+  // Remove the router.base from the path, if it exists
+  path = urlObj.pathname;
+  if ((base = router != null ? (ref = router.options) != null ? ref.base : void 0 : void 0) && path.indexOf(base) === 0) {
+    path = '/' + path.slice(base.length);
+  }
+  // Create path with query and hash
+  return '' + path + urlObj.query + urlObj.hash;
 };
 
 // Add target blank to external links

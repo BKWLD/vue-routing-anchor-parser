@@ -38,14 +38,18 @@ exports.default = {
     if (!to) {
       return create('span', data, children);
     }
+    // Add trailing slashes if configured to
+    if (parent != null ? (ref = parent.$config) != null ? (ref1 = ref.anchorParser) != null ? ref1.addTrailingSlashToInternal : void 0 : void 0 : void 0) {
+      to = (0, _index.addTrailingSlash)(to);
+    }
     // Test if an internal link
     if ((0, _index.isInternal)(to)) {
       // Render a nuxt-link
       return create('nuxt-link', _extends({}, data, {
         nativeOn: listeners, // nuxt-link doesn't forward events on it's own
-        props: {
-          to: (parent != null ? (ref = parent.$config) != null ? (ref1 = ref.anchorParser) != null ? ref1.addTrailingSlashToInternal : void 0 : void 0 : void 0) ? (0, _index.makeRouterPath)((0, _index.addTrailingSlash)(to)) : (0, _index.makeRouterPath)(to)
-        }
+        props: (0, _index.makeRouterPath)(to, {
+          router: parent != null ? parent.$router : void 0
+        })
       }), children);
     } else {
       // Make a standard link that opens in a new window

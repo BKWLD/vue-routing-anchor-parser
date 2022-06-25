@@ -39,7 +39,7 @@ export default
 		then create 'nuxt-link', {
 			...data
 			nativeOn: listeners # nuxt-link doesn't forward events on it's own
-			props: makeRouterPath to, { router: parent?.$router }
+			props: to: makeRouterPath to, { router: parent?.$router }
 		}, children
 
 		# Make a standard link that opens in a new window

@@ -47,9 +47,11 @@ exports.default = {
       // Render a nuxt-link
       return create('nuxt-link', _extends({}, data, {
         nativeOn: listeners, // nuxt-link doesn't forward events on it's own
-        props: (0, _index.makeRouterPath)(to, {
-          router: parent != null ? parent.$router : void 0
-        })
+        props: {
+          to: (0, _index.makeRouterPath)(to, {
+            router: parent != null ? parent.$router : void 0
+          })
+        }
       }), children);
     } else {
       // Make a standard link that opens in a new window

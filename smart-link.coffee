@@ -1,7 +1,12 @@
 # Render a nuxt-link if an internal link or a v-parse-anchor wrapped a if not.
 # This is so that link pre-fetching works.
 
-import { isInternal, makeRouterPath, shouldOpenInNewWindow, addTrailingSlash } from './index'
+import {
+	isInternal,
+	makeRouterPath,
+	shouldOpenInNewWindow,
+	addTrailingSlash
+} from './index'
 
 export default
 	name: 'SmartLink'
@@ -18,6 +23,7 @@ export default
 		children
 		parent
 	}) ->
+
 		# If no "to", wrap children in a span so that children are nested
 		# consistently
 		if !to then return create 'span', data, children

@@ -40,19 +40,19 @@ In `nuxt.config.js`:
   anchorParser: {
     addBlankToExternal: true,
     internalUrls: [
-      /^https?:\/\/localhost:\d+/
-      /^https?:\/\/([\w\-]+\.)?netlify\.com/
-      /^https?:\/\/(www\.)?bukwild\.com/
-    ]
+      /^https?:\/\/localhost:\d+/,
+      /^https?:\/\/([\w\-]+\.)?netlify\.com/,
+      /^https?:\/\/(www\.)?bukwild\.com/,
+    ],
     internalHosts: [
       'localhost',
       'bukwild.com',
-    ]
+    ],
     externalPaths: [
-      /^\/react-landing-page/
-    ]
+      /^\/react-landing-page/,
+    ],
     sameWindowUrls: [
-      /^https?:\/\/(shop\.)?bukwild\.com/
+      /^https?:\/\/(shop\.)?bukwild\.com/,
     ],
     disableSmartLinkRegistration: false,
   }

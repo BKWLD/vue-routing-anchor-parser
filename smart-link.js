@@ -23,12 +23,15 @@ exports.default = {
   name: 'SmartLink',
   functional: true,
   props: {
-    to: String // The URL gets passed here
+    to: String, // The URL gets passed here
+    ariaLabel: String // The link accessible label
   },
 
   // Destructure the props and data we care about
   render: function render(create, _ref) {
-    var to = _ref.props.to,
+    var _ref$props = _ref.props,
+        to = _ref$props.to,
+        ariaLabel = _ref$props.ariaLabel,
         data = _ref.data,
         listeners = _ref.listeners,
         children = _ref.children,
@@ -58,7 +61,8 @@ exports.default = {
       return create('a', _extends({}, data, {
         attrs: _extends({}, data.attrs, {
           href: to,
-          target: (0, _index.shouldOpenInNewWindow)(to) ? '_blank' : void 0
+          target: (0, _index.shouldOpenInNewWindow)(to) ? '_blank' : void 0,
+          "aria-label": ariaLabel
         })
       }), children);
     }

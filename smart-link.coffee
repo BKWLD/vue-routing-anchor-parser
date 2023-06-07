@@ -14,10 +14,11 @@ export default
 
 	props:
 		to: String # The URL gets passed here
+		ariaLabel: String # The link accessible label
 
 	# Destructure the props and data we care about
 	render: (create, {
-		props: { to }
+		props: { to, ariaLabel }
 		data
 		listeners
 		children
@@ -49,5 +50,6 @@ export default
 				...data.attrs
 				href: to
 				target: '_blank' if shouldOpenInNewWindow to
+				"aria-label": ariaLabel
 			}
 		}, children

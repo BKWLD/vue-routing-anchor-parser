@@ -44,7 +44,7 @@ export default
 		# Simple error message
 		message: -> switch @error?.statusCode
 			when 404 then 'Page Not Found'
-			else 'An Error Occured'
+			else 'An Error occurred'
 
 	methods:
 

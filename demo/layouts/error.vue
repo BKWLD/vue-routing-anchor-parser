@@ -43,8 +43,8 @@ export default
 
 		# Simple error message
 		message: -> switch @error?.statusCode
-			when 404 then 'Page Not Found'
-			else 'An Error occurred'
+			when 404 then 'Page not found'
+			else 'An error occurred'
 
 	methods:
 
